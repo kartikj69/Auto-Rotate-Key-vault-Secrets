@@ -68,9 +68,3 @@ To adapt this solution for other Azure AI services:
 1. Modify the script in `regen.ps1` to target your specific service
 2. Update the RBAC roles in `locals.tf` to match the requirements of your service
 3. Adjust the schedule parameters to meet your security policy requirements
-
-## Contributing
-Contributions to improve this solution are welcome. Please follow standard pull request processes to submit changes.
-
-## License
-[Specify your license information here]
