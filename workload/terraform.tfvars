@@ -1,5 +1,5 @@
 tenant_id            = "e4e34038-ea1f-4882-b6e8-ccd776459ca0"
-subscription_id       = "ed739d47-6466-4a92-bc07-49da4c99090e"
+subscription_id      = "ed739d47-6466-4a92-bc07-49da4c99090e"
 kv_name              = "KartiKV"
 translator_name      = "ktranslator"
 secret_name          = "translatorsecret"
@@ -12,7 +12,7 @@ schedule = {
   name       = "re-key-Schedule"
   frequency  = "Hour"
   interval   = 1
-start_time = "2025-03-28T15:00:00Z" # UTC time
+  start_time = "2025-03-28T15:00:00Z" # UTC time
   timezone   = "Asia/Kolkata"
 }
 

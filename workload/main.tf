@@ -59,8 +59,8 @@ module "logicapp" {
   depends_on          = [module.translator_secret]
 }
 module "logicapp_roles" {
-  source = "../modules/permissions"
-  for_each = local.automation_roles
+  source               = "../modules/permissions"
+  for_each             = local.automation_roles
   principal_id         = module.logicapp.principal_id
   role_definition_name = each.value.role_definition_name
   scope                = each.value.scope
