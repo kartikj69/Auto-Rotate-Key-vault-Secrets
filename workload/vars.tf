@@ -2,6 +2,10 @@ variable "tenant_id" {
   description = "Azure Tenant ID"
   type        = string
 }
+variable "subscription_id" {
+  description = "Azure Subscription ID"
+  type        = string
+}
 variable "kv_name" {
   description = "Name of the Key Vault"
   type        = string
@@ -41,4 +45,20 @@ variable "schedule" {
     timezone   = string  # Timezone for the schedule (e.g., "UTC", "India Standard Time")
   })
   description = "Configuration for the Automation Account schedule"
+}
+// ...existing variables...
+
+variable "logicapp_name" {
+  description = "Name of the Logic App workflow"
+  type        = string
+}
+
+variable "logicapp_schedule" {
+  type = object({
+    interval   = number
+    frequency  = string
+    timezone   = string
+    start_time = string
+  })
+  description = "Schedule configuration for the Logic App"
 }

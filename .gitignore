@@ -1,4 +1,9 @@
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+terraform.tfvars
+*.tfvars.json
+*.tfstate
+*.tfstate.*
+*.tfplan
 .terraform.lock.hcl
