@@ -14,18 +14,18 @@ Many organizations using AI services need to regularly rotate API keys as a secu
 The solution consists of:
 - **Azure Cognitive Services (Translator)**: AI service that provides translation capabilities
 - **Azure Key Vault**: Secure secret storage for the API keys
-- **Azure Automation Account**: Runs scheduled PowerShell scripts to rotate keys
-- **RBAC Permissions**: Ensures the automation account has proper access to both services
+- **Azure Logic App**: Serverless workflow that handles the key rotation process
+- **RBAC Permissions**: Ensures the Logic App has proper access to both services
 
 ## Components
 - **Translator Module**: Provisions Azure Cognitive Services Text Translation service
 - **Key Vault Module**: Sets up Azure Key Vault with RBAC authorization
 - **Secret Module**: Manages the storage of secrets in Key Vault
-- **Automation Account Module**: Configures the Azure Automation Account, runbook, and schedule
+- **Logic App Module**: Configures the Azure Logic App workflow with triggers and actions
 - **Permissions Module**: Handles RBAC role assignments for secure access
 
 ## Prerequisites
-- Azure subscription (with Owner access, and Key Vault Admiistrator)
+- Azure subscription (with Owner access, and Key Vault Administrator)
 - Terraform (v0.14+)
 - Azure CLI (for authentication)
 - Proper permissions to create resources in Azure
@@ -42,20 +42,21 @@ The solution consists of:
     ```
 
 ## How It Works
-1. The Automation Account runs a PowerShell script on a scheduled basis (hourly by default)
-2. The script:
-    - Logs in using managed identity
-    - Retrieves the current secret from Key Vault
-    - Regenerates the primary key for the Translator service
-    - Deletes and purges the old secret from Key Vault
-    - Stores the new key in Key Vault
-    - Additionally regenerates the secondary key (for high availability)
+1. The Logic App runs on a recurrence trigger (hourly by default)
+2. The workflow:
+   - Uses HTTP actions with managed identity authentication
+   - Regenerates the primary key for the Translator service
+   - Parses the JSON response to extract the new key
+   - Deletes the old secret from Key Vault
+   - Waits for a delay to ensure deletion is complete
+   - Purges the deleted secret from Key Vault
+   - Adds the new key as a secret to Key Vault
 
 ## Configuration
 Key configuration parameters in `terraform.tfvars`:
-- `sku_name`: Tier of the Automation Account
-- `schedule`: Controls when key rotation occurs (frequency, interval, timezone)
-- `runbook`: Defines the PowerShell script execution environment
+- `logicapp_name`: Name of the Logic App workflow
+- `logicapp_schedule`: Controls when key rotation occurs (frequency, interval, timezone)
+- `secret_name`: Name of the secret in Key Vault
 
 ## Security Considerations
 - System-assigned managed identities are used for authentication
@@ -65,7 +66,7 @@ Key configuration parameters in `terraform.tfvars`:
 
 ## Customization
 To adapt this solution for other Azure AI services:
-1. Modify the script in `regen.ps1` to target your specific service
+1. Modify the URI and body parameters in `modules/logicapp/locals.tf` to target your specific service
 2. Update the RBAC roles in `locals.tf` to match the requirements of your service
 3. Adjust the schedule parameters to meet your security policy requirements
 
