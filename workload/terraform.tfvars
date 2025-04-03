@@ -1,9 +1,10 @@
-tenant_id            = "e4e34038-ea1f-4882-b6e8-ccd776459ca0"
+tenant_id            = "tenant_id"
+subscription_id = "sub_id"
 kv_name              = "KartiKV"
 translator_name      = "ktranslator"
 secret_name          = "translatorsecret"
 role_definition_name = "Key Vault Administrator"
-
+filepath = "${path.module}/regen.ps1" # Path to the PowerShell script
 sku_name                = "Basic"
 automation_account_name = "AutomationAccount"
 

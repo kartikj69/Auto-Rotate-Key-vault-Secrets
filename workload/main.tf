@@ -3,7 +3,7 @@ data "azurerm_resource_group" "rg" {
   name = "Kartik-RG"
 }
 data "local_file" "powashell_script" {
-filename = "C:/Users/KartikJindal/Desktop/code/Terraform/translator/workload/regen.ps1"
+filename = var.filepath
 }
 module "translator" {
   source              = "../modules/translator"

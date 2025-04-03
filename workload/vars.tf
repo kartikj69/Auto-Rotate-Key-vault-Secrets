@@ -2,6 +2,15 @@ variable "tenant_id" {
   description = "Azure Tenant ID"
   type        = string
 }
+variable "subscription_id" {
+  description = "Azure Subscription ID"
+  type        = string  
+}
+variable "filepath" {
+  description = "path of the powershell script"
+  type        = string
+  default     = "${path.module}/regen.ps1"
+}
 variable "kv_name" {
   description = "Name of the Key Vault"
   type        = string
